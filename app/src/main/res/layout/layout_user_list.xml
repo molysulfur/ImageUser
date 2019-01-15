@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             xmlns:tool="http://schemas.android.com/tools">
+    <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/imgUserList"
+            android:layout_marginTop="@dimen/marginParent"
+            android:layout_marginStart="@dimen/marginParent"
+            android:layout_marginEnd="@dimen/marginParent"
+            android:layout_marginBottom="@dimen/dim_0dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/baseImageUserList"
+            android:scaleType="centerCrop"
+            tool:src="@tools:sample/backgrounds/scenic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+</android.support.constraint.ConstraintLayout>

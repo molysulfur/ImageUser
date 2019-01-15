@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dim_16dp">16dp</dimen>
+    <dimen name="dim_250dp">250dp</dimen>
+    <dimen name="dim_0dp">0dp</dimen>
+
+    <dimen name="marginParent">@dimen/dim_16dp</dimen>
+    <dimen name="baseImageUserList">@dimen/dim_250dp</dimen>
+    <dimen name="baseCircleImage">200dp</dimen>
+</resources>
