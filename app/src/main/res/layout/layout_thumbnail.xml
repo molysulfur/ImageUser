@@ -2,11 +2,16 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
                                              android:layout_width="wrap_content"
-                                             android:layout_height="wrap_content">
+                                             android:layout_height="wrap_content"
+                                             xmlns:tools="http://schemas.android.com/tools">
     <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgThumbnail"
             android:layout_width="@dimen/baseCircleImage"
             android:layout_height="@dimen/baseCircleImage"
-            android:layout_margin="@dimen/marginParent"
+            android:layout_margin="@dimen/marginBetweenItem"
+            app:civ_border_width="@dimen/dim_3dp"
+            app:civ_border_color="@color/colorNormalBorder"
+            android:src="@drawable/ic_launcher_background"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

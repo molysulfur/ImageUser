@@ -4,7 +4,7 @@
                                              android:layout_width="match_parent"
                                              android:layout_height="wrap_content"
                                              xmlns:tool="http://schemas.android.com/tools">
-    <android.support.v7.widget.AppCompatImageButton
+    <ImageView
             android:id="@+id/imgUserList"
             android:layout_marginTop="@dimen/marginParent"
             android:layout_marginStart="@dimen/marginParent"

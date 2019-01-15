@@ -16,7 +16,7 @@ class UserHolder(override val containerView: View) : RecyclerView.ViewHolder(con
             imgUserList.setOnClickListener {
                 val intent = Intent(containerView.context,UserInfoActivity::class.java)
                 intent.putExtra("name",userItem.name)
-                intent.putExtra("name",userItem.url)
+                intent.putExtra("url",userItem.url)
                 containerView.context.startActivity(intent)
             }
         }

@@ -1,5 +1,6 @@
 package com.example.molysulfur.imageuser.service
 
+import com.example.molysulfur.imageuser.data.UserInfos
 import com.example.molysulfur.imageuser.data.Users
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import io.reactivex.Observable
@@ -14,7 +15,7 @@ interface UserService {
     fun getUsers() : Observable<Users>
 
     @GET("{user}")
-    fun getUsers(@Path("user") userName : String) : Observable<Users>
+    fun getUserInfo(@Path("user") userName : String) : Observable<UserInfos>
 
     companion object {
         private val BASE_URL = "http://mock.nextzy.me/api/v1/"

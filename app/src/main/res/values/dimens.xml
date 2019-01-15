@@ -3,8 +3,12 @@
     <dimen name="dim_16dp">16dp</dimen>
     <dimen name="dim_250dp">250dp</dimen>
     <dimen name="dim_0dp">0dp</dimen>
+    <dimen name="dim_100dp">100dp</dimen>
+    <dimen name="dim_8dp">8dp</dimen>
 
     <dimen name="marginParent">@dimen/dim_16dp</dimen>
     <dimen name="baseImageUserList">@dimen/dim_250dp</dimen>
-    <dimen name="baseCircleImage">200dp</dimen>
+    <dimen name="baseCircleImage">@dimen/dim_100dp</dimen>
+    <dimen name="marginBetweenItem">@dimen/dim_8dp</dimen>
+    <dimen name="dim_3dp">3dp</dimen>
 </resources>

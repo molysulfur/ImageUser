@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     private var userlists : Users? = null
     private val userListObserver = object : Observer<Users> {
         override fun onComplete() {
-            val userItemList = UserCreator.toBaseItem(userlists?.data)
+            val userItemList = UserCreator.toUsersBaseItem(userlists?.data)
             setViews(userItemList)
         }
 
@@ -34,19 +34,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        super.onRestoreInstanceState(savedInstanceState)
-        if (savedInstanceState != null){
-            userlists = savedInstanceState.getParcelable("userItemList")
-            val userItemList = UserCreator.toBaseItem(userlists?.data)
-            setViews(userItemList)
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
-        outState?.putParcelable("userItemList",userlists)
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -66,7 +53,22 @@ class MainActivity : AppCompatActivity() {
     private fun setViews(userItemList: List<BaseItem>) {
         recycler_main.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = UserListAdapter(userItemList)
+            adapter = UserListAdapter(userItemList,null)
         }
     }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        if (savedInstanceState != null){
+            userlists = savedInstanceState.getParcelable("userItemList")
+            val userItemList = UserCreator.toUsersBaseItem(userlists?.data)
+            setViews(userItemList)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putParcelable("userItemList",userlists)
+    }
+
 }
