@@ -17,8 +17,9 @@ import kotlinx.android.synthetic.main.activity_userinfo.*
 class UserInfoActivity : AppCompatActivity(){
 
     private val selectorListener = object : UserListAdapter.SelectorListener{
-        override fun onCurrentImageChange(url: String) {
+        override fun onCurrentImageChange(url: String,callback : UserListAdapter.SelectorListener?) {
             Glide.with(this@UserInfoActivity).load(url).into(currentImageUserInfo)
+            callback?.onCurrentImageChange(url,null)
         }
     }
     private var name =""

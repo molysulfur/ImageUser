@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tool="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
-                                             android:layout_height="wrap_content"
-                                             xmlns:tool="http://schemas.android.com/tools">
+                                             android:layout_height="wrap_content">
     <ImageView
             android:id="@+id/imgUserList"
             android:layout_marginTop="@dimen/marginParent"
             android:layout_marginStart="@dimen/marginParent"
             android:layout_marginEnd="@dimen/marginParent"
-            android:layout_marginBottom="@dimen/dim_0dp"
+            android:layout_marginBottom="@dimen/marginParent"
             android:layout_width="match_parent"
             android:layout_height="@dimen/baseImageUserList"
             android:scaleType="centerCrop"

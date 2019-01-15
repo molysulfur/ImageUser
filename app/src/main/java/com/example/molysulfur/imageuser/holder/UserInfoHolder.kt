@@ -9,7 +9,10 @@ import com.example.molysulfur.imageuser.item.UserInfoItem
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.layout_thumbnail.*
 
-class UserInfoHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer{
+class UserInfoHolder(
+    override val containerView: View,
+    val callback: UserListAdapter.SelectorListener
+) : RecyclerView.ViewHolder(containerView), LayoutContainer{
 
     private lateinit var selectorListener : UserListAdapter.SelectorListener
 
@@ -17,8 +20,12 @@ class UserInfoHolder(override val containerView: View) : RecyclerView.ViewHolder
         if (userInfoItem != null){
             Glide.with(containerView.context).load(userInfoItem.thumbnail).into(imgThumbnail)
             imgThumbnail.setOnClickListener {
-                selectorListener.onCurrentImageChange(userInfoItem.url?:"")
+                selectorListener.onCurrentImageChange(userInfoItem.url?:"",callback)
+            }
+            if (userInfoItem.current){
                 imgThumbnail.borderColor = Color.BLUE
+            }else{
+                imgThumbnail.borderColor = Color.WHITE
             }
         }
     }

@@ -14,6 +14,15 @@ import com.example.molysulfur.imageuser.item.UserItem
 
 class UserListAdapter(val listUser : List<BaseItem>?,val selectorListener: SelectorListener?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private val selectorCallback = object : UserListAdapter.SelectorListener{
+        override fun onCurrentImageChange(url: String, callback: SelectorListener?) {
+            listUser?.forEach {
+                (it as UserInfoItem).current = it.url == url
+            }
+            notifyDataSetChanged()
+        }
+    }
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, type: Int): RecyclerView.ViewHolder {
         return when(type) {
             TYPE_USER_LIST -> {
@@ -22,7 +31,7 @@ class UserListAdapter(val listUser : List<BaseItem>?,val selectorListener: Selec
             }
             TYPE_USERINFO_LIST ->{
                 val rootView = LayoutInflater.from(viewGroup.context).inflate(R.layout.layout_thumbnail, viewGroup, false)
-                UserInfoHolder(rootView)
+                UserInfoHolder(rootView,selectorCallback)
             }
             else -> {
                 super.createViewHolder(viewGroup,type)
@@ -52,6 +61,6 @@ class UserListAdapter(val listUser : List<BaseItem>?,val selectorListener: Selec
     }
 
     interface SelectorListener{
-        fun onCurrentImageChange(url : String)
+        fun onCurrentImageChange(url : String,callback : SelectorListener?)
     }
 }

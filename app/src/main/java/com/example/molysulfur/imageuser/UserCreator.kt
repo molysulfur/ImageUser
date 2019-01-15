@@ -21,8 +21,19 @@ class UserCreator{
 
         fun toUserInfoBaseItem(userInfo : List<UserInfo>?): List<BaseItem> {
             val listItem = ArrayList<BaseItem>()
-            userInfo?.forEach {
-                listItem.add(UserInfoItem(it))
+            if (userInfo != null) {
+                for (index in 0..userInfo.size-1) {
+                    when(index) {
+                        0 -> {
+                            val info = UserInfoItem(userInfo[index])
+                            info.current = true
+                            listItem.add(info)
+                        }
+                        else ->{
+                            listItem.add(UserInfoItem(userInfo[index]))
+                        }
+                    }
+                }
             }
             return listItem
         }
