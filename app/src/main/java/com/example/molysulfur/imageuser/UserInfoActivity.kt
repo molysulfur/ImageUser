@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.molysulfur.imageuser.adapter.UserListAdapter
 import com.example.molysulfur.imageuser.data.UserInfos
 import com.example.molysulfur.imageuser.item.BaseItem
@@ -24,7 +25,13 @@ class UserInfoActivity : AppCompatActivity(){
 
     private val selectorListener = object : UserListAdapter.SelectorListener{
         override fun onCurrentImageChange(url: String,callback : UserListAdapter.SelectorListener?) {
-            Glide.with(this@UserInfoActivity).load(url).into(currentImageUserInfo)
+            Glide
+                .with(this@UserInfoActivity)
+                .load(url)
+                .apply(RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.drawable.placeholder_large))
+                .into(currentImageUserInfo)
             callback?.onCurrentImageChange(url,null)
         }
     }
@@ -64,7 +71,12 @@ class UserInfoActivity : AppCompatActivity(){
     }
 
     private fun setViews(userItemList: List<BaseItem>) {
-        Glide.with(this@UserInfoActivity).load(url).into(currentImageUserInfo)
+        Glide.with(this@UserInfoActivity)
+            .load(url)
+            .apply(RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.placeholder_large))
+            .into(currentImageUserInfo)
         recycler_thumbnail.apply {
             layoutManager = LinearLayoutManager(this@UserInfoActivity,LinearLayoutManager.HORIZONTAL,false)
             adapter = UserListAdapter(userItemList,selectorListener)

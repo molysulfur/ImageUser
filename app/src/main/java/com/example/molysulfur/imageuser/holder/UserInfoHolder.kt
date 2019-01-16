@@ -4,6 +4,8 @@ import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.example.molysulfur.imageuser.R
 import com.example.molysulfur.imageuser.adapter.UserListAdapter
 import com.example.molysulfur.imageuser.item.UserInfoItem
 import kotlinx.android.extensions.LayoutContainer
@@ -18,7 +20,13 @@ class UserInfoHolder(
 
     fun onBind(userInfoItem: UserInfoItem?) {
         if (userInfoItem != null){
-            Glide.with(containerView.context).load(userInfoItem.thumbnail).into(imgThumbnail)
+            Glide.with(containerView.context)
+                .load(userInfoItem.thumbnail)
+                .apply(
+                    RequestOptions()
+                        .centerCrop()
+                        .placeholder(R.drawable.placeholder_small))
+                .into(imgThumbnail)
             imgThumbnail.setOnClickListener {
                 clickThumbnaiListener.onCurrentImageChange(userInfoItem.url?:"",callback)
             }
