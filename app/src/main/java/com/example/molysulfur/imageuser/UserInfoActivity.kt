@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import com.bumptech.glide.GenericTransitionOptions
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.molysulfur.imageuser.adapter.UserListAdapter
@@ -25,9 +26,9 @@ class UserInfoActivity : AppCompatActivity(){
 
     private val selectorListener = object : UserListAdapter.SelectorListener{
         override fun onCurrentImageChange(url: String,callback : UserListAdapter.SelectorListener?) {
-            Glide
-                .with(this@UserInfoActivity)
+            Glide.with(this@UserInfoActivity)
                 .load(url)
+                .transition(GenericTransitionOptions.with(R.anim.fade_in))
                 .apply(RequestOptions()
                     .centerCrop()
                     .placeholder(R.drawable.placeholder_large))
@@ -73,6 +74,7 @@ class UserInfoActivity : AppCompatActivity(){
     private fun setViews(userItemList: List<BaseItem>) {
         Glide.with(this@UserInfoActivity)
             .load(url)
+            .transition(GenericTransitionOptions.with(R.anim.fade_in))
             .apply(RequestOptions()
                 .centerCrop()
                 .placeholder(R.drawable.placeholder_large))

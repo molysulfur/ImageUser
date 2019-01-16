@@ -3,6 +3,7 @@ package com.example.molysulfur.imageuser.holder
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import com.bumptech.glide.GenericTransitionOptions
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.molysulfur.imageuser.R
@@ -16,6 +17,7 @@ class UserHolder(override val containerView: View) : RecyclerView.ViewHolder(con
         if (userItem != null){
             Glide.with(containerView.context)
                 .load(userItem.url)
+                .transition(GenericTransitionOptions.with(R.anim.fade_in))
                 .apply(
                     RequestOptions()
                         .centerCrop()

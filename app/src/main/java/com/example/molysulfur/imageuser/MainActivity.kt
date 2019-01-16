@@ -15,10 +15,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private var userlists : Users? = null
+    private var listUsers : Users? = null
     private val userListObserver = object : Observer<Users> {
         override fun onComplete() {
-            val userItemList = UserCreator.toUsersBaseItem(userlists?.data)
+            val userItemList = UserCreator.toUsersBaseItem(listUsers?.data)
             setViews(userItemList)
         }
 
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onNext(users: Users) {
-            userlists = users
+            listUsers = users
         }
 
         override fun onError(e: Throwable) {
@@ -60,15 +60,15 @@ class MainActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
         if (savedInstanceState != null){
-            userlists = savedInstanceState.getParcelable("userItemList")
-            val userItemList = UserCreator.toUsersBaseItem(userlists?.data)
+            listUsers = savedInstanceState.getParcelable("userItemList")
+            val userItemList = UserCreator.toUsersBaseItem(listUsers?.data)
             setViews(userItemList)
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        outState?.putParcelable("userItemList",userlists)
+        outState?.putParcelable("userItemList",listUsers)
     }
 
 }

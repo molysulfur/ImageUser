@@ -3,6 +3,7 @@ package com.example.molysulfur.imageuser.holder
 import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import com.bumptech.glide.GenericTransitionOptions
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.molysulfur.imageuser.R
@@ -13,7 +14,7 @@ import kotlinx.android.synthetic.main.layout_thumbnail.*
 
 class UserInfoHolder(
     override val containerView: View,
-    val callback: UserListAdapter.SelectorListener
+    private val callback: UserListAdapter.SelectorListener
 ) : RecyclerView.ViewHolder(containerView), LayoutContainer{
 
     private lateinit var clickThumbnaiListener : UserListAdapter.SelectorListener
@@ -22,6 +23,7 @@ class UserInfoHolder(
         if (userInfoItem != null){
             Glide.with(containerView.context)
                 .load(userInfoItem.thumbnail)
+                .transition(GenericTransitionOptions.with(R.anim.fade_in))
                 .apply(
                     RequestOptions()
                         .centerCrop()
