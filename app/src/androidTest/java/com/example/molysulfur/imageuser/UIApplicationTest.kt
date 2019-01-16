@@ -21,11 +21,14 @@ class UIApplicationTest {
     @Test
     fun mainActivityTest() {
         Thread.sleep(500)
-        testClickRecyclerView(0, 9)
+        testClickRecyclerView(0, 10)
         testClickRecyclerView(1, 8)
         testClickRecyclerView(2, 12)
         testClickRecyclerView(3, 10)
         testClickRecyclerView(4, 11)
+        testClickRecyclerView(5, 8)
+        testClickRecyclerView(6, 9)
+        testClickRecyclerView(7, 8)
     }
 
     private fun testClickRecyclerView(positionMain: Int, sizeThumbnail: Int) {
