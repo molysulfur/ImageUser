@@ -17,16 +17,17 @@ import kotlinx.android.synthetic.main.activity_userinfo.*
 
 class UserInfoActivity : AppCompatActivity(){
 
+
+    private var name =""
+    private var url = ""
+    private var listUserInfo : UserInfos? = null
+
     private val selectorListener = object : UserListAdapter.SelectorListener{
         override fun onCurrentImageChange(url: String,callback : UserListAdapter.SelectorListener?) {
             Glide.with(this@UserInfoActivity).load(url).into(currentImageUserInfo)
             callback?.onCurrentImageChange(url,null)
         }
     }
-    private var name =""
-    private var url = ""
-    private var listUserInfo : UserInfos? = null
-
     private var userInfoObserver = object : Observer<UserInfos>{
         override fun onComplete() {
             val userItemList = UserCreator.toUserInfoBaseItem(listUserInfo?.data)

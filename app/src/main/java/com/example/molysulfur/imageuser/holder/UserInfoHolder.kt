@@ -14,13 +14,13 @@ class UserInfoHolder(
     val callback: UserListAdapter.SelectorListener
 ) : RecyclerView.ViewHolder(containerView), LayoutContainer{
 
-    private lateinit var selectorListener : UserListAdapter.SelectorListener
+    private lateinit var clickThumbnaiListener : UserListAdapter.SelectorListener
 
     fun onBind(userInfoItem: UserInfoItem?) {
         if (userInfoItem != null){
             Glide.with(containerView.context).load(userInfoItem.thumbnail).into(imgThumbnail)
             imgThumbnail.setOnClickListener {
-                selectorListener.onCurrentImageChange(userInfoItem.url?:"",callback)
+                clickThumbnaiListener.onCurrentImageChange(userInfoItem.url?:"",callback)
             }
             if (userInfoItem.current){
                 imgThumbnail.borderColor = Color.BLUE
@@ -31,6 +31,6 @@ class UserInfoHolder(
     }
 
     fun onCurrentChange(selectorListener: UserListAdapter.SelectorListener){
-        this.selectorListener = selectorListener
+        this.clickThumbnaiListener = selectorListener
     }
 }
