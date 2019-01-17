@@ -40,6 +40,7 @@ class UIApplicationTest {
     }
 
     private fun testClickItemInsideRecycler(positionMain: Int, sizeThumbnail: Int) {
+        Thread.sleep(500)
         Espresso.onView(ViewMatchers.withId(R.id.recycler_main)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 positionMain,
