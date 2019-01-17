@@ -21,25 +21,25 @@ class UIApplicationTest {
     @Test
     fun mainActivityTest() {
         Thread.sleep(500)
-        testClickRecyclerView(0, 10)
-        testClickRecyclerView(1, 8)
-        testClickRecyclerView(2, 12)
-        testClickRecyclerView(3, 10)
-        testClickRecyclerView(4, 11)
-        testClickRecyclerView(5, 8)
-        testClickRecyclerView(6, 9)
-        testClickRecyclerView(7, 8)
-        testClickRecyclerView(0, 10)
-        testClickRecyclerView(1, 8)
-        testClickRecyclerView(2, 12)
-        testClickRecyclerView(3, 10)
-        testClickRecyclerView(4, 11)
-        testClickRecyclerView(5, 8)
-        testClickRecyclerView(6, 9)
-        testClickRecyclerView(7, 8)
+        testClickItemInsideRecycler(0, 10)
+        testClickItemInsideRecycler(1, 8)
+        testClickItemInsideRecycler(2, 12)
+        testClickItemInsideRecycler(3, 10)
+        testClickItemInsideRecycler(4, 11)
+        testClickItemInsideRecycler(5, 8)
+        testClickItemInsideRecycler(6, 9)
+        testClickItemInsideRecycler(7, 8)
+        testClickItemInsideRecycler(0, 10)
+        testClickItemInsideRecycler(1, 8)
+        testClickItemInsideRecycler(2, 12)
+        testClickItemInsideRecycler(3, 10)
+        testClickItemInsideRecycler(4, 11)
+        testClickItemInsideRecycler(5, 8)
+        testClickItemInsideRecycler(6, 9)
+        testClickItemInsideRecycler(7, 8)
     }
 
-    private fun testClickRecyclerView(positionMain: Int, sizeThumbnail: Int) {
+    private fun testClickItemInsideRecycler(positionMain: Int, sizeThumbnail: Int) {
         Espresso.onView(ViewMatchers.withId(R.id.recycler_main)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 positionMain,
