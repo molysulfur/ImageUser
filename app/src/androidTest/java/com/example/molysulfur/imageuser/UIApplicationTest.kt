@@ -29,6 +29,14 @@ class UIApplicationTest {
         testClickRecyclerView(5, 8)
         testClickRecyclerView(6, 9)
         testClickRecyclerView(7, 8)
+        testClickRecyclerView(0, 10)
+        testClickRecyclerView(1, 8)
+        testClickRecyclerView(2, 12)
+        testClickRecyclerView(3, 10)
+        testClickRecyclerView(4, 11)
+        testClickRecyclerView(5, 8)
+        testClickRecyclerView(6, 9)
+        testClickRecyclerView(7, 8)
     }
 
     private fun testClickRecyclerView(positionMain: Int, sizeThumbnail: Int) {
@@ -38,7 +46,7 @@ class UIApplicationTest {
                 ViewActions.click()
             )
         )
-        Thread.sleep(500)
+        Thread.sleep(400)
         for (position in 0 until sizeThumbnail) {
             Espresso.onView(ViewMatchers.withId(R.id.recycler_thumbnail)).perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
@@ -46,6 +54,7 @@ class UIApplicationTest {
                     ViewActions.click()
                 )
             )
+            Thread.sleep(300)
         }
         Espresso.pressBack()
     }
