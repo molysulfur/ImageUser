@@ -5,6 +5,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.bumptech.glide.GenericTransitionOptions
 import com.bumptech.glide.Glide
+import com.bumptech.glide.GlideBuilder
+import com.bumptech.glide.load.DecodeFormat
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.example.molysulfur.imageuser.R
 import com.example.molysulfur.imageuser.adapter.UserListAdapter
@@ -26,8 +29,11 @@ class UserInfoHolder(
                 .transition(GenericTransitionOptions.with(R.anim.fade_in))
                 .apply(
                     RequestOptions()
+                        .placeholder(R.drawable.placeholder_small)
+                        .fitCenter()
                         .centerCrop()
-                        .placeholder(R.drawable.placeholder_small))
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .format(DecodeFormat.PREFER_RGB_565))
                 .into(imgThumbnail)
             imgThumbnail.setOnClickListener {
                 clickThumbnaiListener.onCurrentImageChange(userInfoItem.url?:"",callback)

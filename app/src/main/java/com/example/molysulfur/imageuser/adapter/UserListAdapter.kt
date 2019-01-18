@@ -12,7 +12,7 @@ import com.example.molysulfur.imageuser.item.BaseItem
 import com.example.molysulfur.imageuser.item.UserInfoItem
 import com.example.molysulfur.imageuser.item.UserItem
 
-class UserListAdapter(val listUser : List<BaseItem>?,val selectorListener: SelectorListener?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class UserListAdapter(val listUser : List<BaseItem>?,val selectorListener: SelectorListener?) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     private val selectorCallback = object : UserListAdapter.SelectorListener{
         override fun onCurrentImageChange(url: String, callback: SelectorListener?) {
