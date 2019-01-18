@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import com.bumptech.glide.Glide
 import com.example.molysulfur.imageuser.adapter.UserListAdapter
 import com.example.molysulfur.imageuser.data.Users
 import com.example.molysulfur.imageuser.item.BaseItem

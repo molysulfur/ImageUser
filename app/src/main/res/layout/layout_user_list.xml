@@ -12,7 +12,6 @@
             android:layout_marginBottom="@dimen/marginParent"
             android:layout_width="match_parent"
             android:layout_height="@dimen/baseImageUserList"
-            android:scaleType="centerCrop"
             tool:src="@tools:sample/backgrounds/scenic"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

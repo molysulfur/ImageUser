@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.bumptech.glide.GenericTransitionOptions
 import com.bumptech.glide.Glide
+import com.bumptech.glide.GlideBuilder
+import com.bumptech.glide.MemoryCategory
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -60,6 +62,7 @@ class UserInfoActivity : AppCompatActivity(),
     }
 
     private fun init() {
+        Glide.get(this).setMemoryCategory(MemoryCategory.LOW)
         url = intent.getStringExtra("url")
 
         UserService.getRetrofit().getUserInfo(intent.getStringExtra("name"))
@@ -107,6 +110,6 @@ class UserInfoActivity : AppCompatActivity(),
         super.onDestroy()
         userInfoObserver.dispose()
         recycler_thumbnail.adapter = null
-
+        Glide.get(this).clearMemory()
     }
 }
