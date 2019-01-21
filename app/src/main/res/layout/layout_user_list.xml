@@ -10,6 +10,7 @@
             android:layout_marginStart="@dimen/marginParent"
             android:layout_marginEnd="@dimen/marginParent"
             android:layout_marginBottom="@dimen/marginParent"
+            android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="@dimen/baseImageUserList"
             tool:src="@tools:sample/backgrounds/scenic"
