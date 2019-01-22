@@ -3,10 +3,10 @@ package com.example.molysulfur.imageuser
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import com.bumptech.glide.Glide
 import com.example.molysulfur.imageuser.adapter.UserListAdapter
 import com.example.molysulfur.imageuser.data.Users
+import com.example.molysulfur.imageuser.idlingresource.EspressoIdlingResource
 import com.example.molysulfur.imageuser.item.BaseItem
 import com.example.molysulfur.imageuser.service.UserService
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         override fun onComplete() {
             val userItemList = UserCreator.toUsersBaseItem(listUsers?.data)
             setViews(userItemList)
+            mIdlingResource.decrement()
         }
 
         override fun onNext(users: Users) {
@@ -32,6 +33,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private val mIdlingResource = EspressoIdlingResource
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -41,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        Log.e("init","create main")
+        mIdlingResource.increment()
         UserService.getRetrofit()
             .getUsers()
             .subscribeOn(Schedulers.io())
@@ -54,6 +57,7 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = UserListAdapter(userItemList,null)
         }
+
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
@@ -75,5 +79,7 @@ class MainActivity : AppCompatActivity() {
         userListObserver.dispose()
         Glide.get(this).clearMemory()
     }
+
+    fun getIdlingResourceInTest() = mIdlingResource.idlingResource
 
 }

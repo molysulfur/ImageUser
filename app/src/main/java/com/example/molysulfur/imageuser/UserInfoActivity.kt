@@ -1,16 +1,22 @@
 package com.example.molysulfur.imageuser
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.bumptech.glide.GenericTransitionOptions
 import com.bumptech.glide.Glide
 import com.bumptech.glide.MemoryCategory
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.example.molysulfur.imageuser.adapter.UserListAdapter
 import com.example.molysulfur.imageuser.data.UserInfos
+import com.example.molysulfur.imageuser.idlingresource.EspressoIdlingResource
 import com.example.molysulfur.imageuser.item.BaseItem
 import com.example.molysulfur.imageuser.service.UserService
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,6 +27,7 @@ import kotlinx.android.synthetic.main.activity_userinfo.*
 class UserInfoActivity : AppCompatActivity(),
     UserListAdapter.SelectorListener {
     override fun onCurrentImageChange(url: String, callback: UserListAdapter.SelectorListener?) {
+        EspressoIdlingResource.increment()
         Glide.with(this@UserInfoActivity)
             .load(url)
             .transition(GenericTransitionOptions.with(R.anim.fade_in))
@@ -32,6 +39,27 @@ class UserInfoActivity : AppCompatActivity(),
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .format(DecodeFormat.PREFER_RGB_565)
             )
+            .listener(object: RequestListener<Drawable?> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable?>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable?>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    EspressoIdlingResource.decrement()
+                    return false
+                }
+            })
             .into(currentImageUserInfo)
         callback?.onCurrentImageChange(url, null)
     }
@@ -43,6 +71,7 @@ class UserInfoActivity : AppCompatActivity(),
         override fun onComplete() {
             val userItemList = UserCreator.toUserInfoBaseItem(listUserInfo?.data)
             setViews(userItemList)
+            EspressoIdlingResource.decrement()
         }
 
         override fun onNext(userInfos: UserInfos) {
@@ -63,7 +92,7 @@ class UserInfoActivity : AppCompatActivity(),
     private fun init() {
         Glide.get(this).setMemoryCategory(MemoryCategory.LOW)
         url = intent.getStringExtra("url")
-
+        EspressoIdlingResource.increment()
         UserService.getRetrofit().getUserInfo(intent.getStringExtra("name"))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -71,6 +100,7 @@ class UserInfoActivity : AppCompatActivity(),
     }
 
     private fun setViews(userItemList: List<BaseItem>) {
+        EspressoIdlingResource.increment()
         Glide.with(this@UserInfoActivity)
             .load(url)
             .transition(GenericTransitionOptions.with(R.anim.fade_in))
@@ -82,6 +112,27 @@ class UserInfoActivity : AppCompatActivity(),
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .format(DecodeFormat.PREFER_RGB_565)
             )
+            .listener(object: RequestListener<Drawable?> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable?>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable?>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    EspressoIdlingResource.decrement()
+                    return false
+                }
+            })
             .into(currentImageUserInfo)
         recycler_thumbnail.apply {
             layoutManager = LinearLayoutManager(this@UserInfoActivity, LinearLayoutManager.HORIZONTAL, false)
