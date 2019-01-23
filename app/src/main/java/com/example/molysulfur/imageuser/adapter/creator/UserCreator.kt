@@ -1,17 +1,17 @@
-package com.example.molysulfur.imageuser
+package com.example.molysulfur.imageuser.adapter.creator
 
-import com.example.molysulfur.imageuser.data.User
 import com.example.molysulfur.imageuser.data.UserInfo
-import com.example.molysulfur.imageuser.item.BaseItem
-import com.example.molysulfur.imageuser.item.UserInfoItem
-import com.example.molysulfur.imageuser.item.UserItem
+import com.example.molysulfur.imageuser.adapter.item.BaseItem
+import com.example.molysulfur.imageuser.adapter.item.UserInfoItem
+import com.example.molysulfur.imageuser.adapter.item.UserItem
+import com.example.molysulfur.imageuser.data.User
 
 class UserCreator{
     companion object {
         const val TYPE_USER_LIST = 0
         const val TYPE_USERINFO_LIST = 1
 
-        fun toUsersBaseItem(users : List<User>?): List<BaseItem> {
+        fun toUsersBaseItem(users: MutableList<User>?): List<BaseItem> {
             val listItem = ArrayList<BaseItem>()
             users?.forEach {
                 listItem.add(UserItem(it))

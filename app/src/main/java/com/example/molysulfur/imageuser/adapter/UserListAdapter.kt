@@ -4,13 +4,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.molysulfur.imageuser.R
-import com.example.molysulfur.imageuser.UserCreator.Companion.TYPE_USERINFO_LIST
-import com.example.molysulfur.imageuser.UserCreator.Companion.TYPE_USER_LIST
-import com.example.molysulfur.imageuser.holder.UserHolder
-import com.example.molysulfur.imageuser.holder.UserInfoHolder
-import com.example.molysulfur.imageuser.item.BaseItem
-import com.example.molysulfur.imageuser.item.UserInfoItem
-import com.example.molysulfur.imageuser.item.UserItem
+import com.example.molysulfur.imageuser.adapter.creator.UserCreator.Companion.TYPE_USERINFO_LIST
+import com.example.molysulfur.imageuser.adapter.creator.UserCreator.Companion.TYPE_USER_LIST
+import com.example.molysulfur.imageuser.adapter.holder.UserHolder
+import com.example.molysulfur.imageuser.adapter.holder.UserInfoHolder
+import com.example.molysulfur.imageuser.adapter.item.BaseItem
+import com.example.molysulfur.imageuser.adapter.item.UserInfoItem
+import com.example.molysulfur.imageuser.adapter.item.UserItem
 
 class UserListAdapter(val listUser : List<BaseItem>?,val selectorListener: SelectorListener?) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
