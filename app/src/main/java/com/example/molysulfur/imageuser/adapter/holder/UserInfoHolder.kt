@@ -1,23 +1,16 @@
-package com.example.molysulfur.imageuser.holder
+package com.example.molysulfur.imageuser.adapter.holder
 
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.widget.Toast
 import com.bumptech.glide.GenericTransitionOptions
 import com.bumptech.glide.Glide
-import com.bumptech.glide.GlideBuilder
-import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
 import com.example.molysulfur.imageuser.R
 import com.example.molysulfur.imageuser.adapter.UserListAdapter
-import com.example.molysulfur.imageuser.item.UserInfoItem
+import com.example.molysulfur.imageuser.adapter.item.UserInfoItem
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.layout_thumbnail.*
 
