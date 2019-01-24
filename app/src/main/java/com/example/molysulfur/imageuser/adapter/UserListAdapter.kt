@@ -15,7 +15,7 @@ import com.example.molysulfur.imageuser.adapter.item.UserItem
 class UserListAdapter(val listUser : List<BaseItem>?,val selectorListener: SelectorListener?) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     private val selectorCallback = object : UserListAdapter.SelectorListener{
-        override fun onCurrentImageChange(url: String, callback: SelectorListener?) {
+        override fun onCurrentImageChange(url: String,dataType: String, callback: SelectorListener?) {
             listUser?.forEach {
                 (it as UserInfoItem).current = it.url == url
             }
@@ -61,6 +61,6 @@ class UserListAdapter(val listUser : List<BaseItem>?,val selectorListener: Selec
     }
 
     interface SelectorListener{
-        fun onCurrentImageChange(url : String,callback : SelectorListener?)
+        fun onCurrentImageChange(url : String,dataType : String,callback : SelectorListener?)
     }
 }

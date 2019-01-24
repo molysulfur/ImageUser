@@ -7,9 +7,11 @@ import com.google.gson.annotations.SerializedName
 
 data class UserInfo(
     @SerializedName("url") val url : String? ="",
-    @SerializedName("thumbnail") val thumbnail : String? =""
+    @SerializedName("thumbnail") val thumbnail : String? ="",
+    @SerializedName("type") val dataType : String? =""
 ) : KParcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
         parcel.readString(),
         parcel.readString()
     )
@@ -17,6 +19,7 @@ data class UserInfo(
     override fun writeToParcel(dest: Parcel, flags: Int) {
         dest.writeString(url)
         dest.writeString(thumbnail)
+        dest.writeString(dataType)
     }
 
     override fun describeContents(): Int {

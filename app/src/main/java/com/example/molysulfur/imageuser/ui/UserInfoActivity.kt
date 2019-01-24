@@ -2,27 +2,20 @@ package com.example.molysulfur.imageuser.ui
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.widget.Toast
-import com.bumptech.glide.GenericTransitionOptions
+import android.util.Log
 import com.bumptech.glide.Glide
 import com.bumptech.glide.MemoryCategory
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.DecodeFormat
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
 import com.example.molysulfur.imageuser.R
 import com.example.molysulfur.imageuser.adapter.UserListAdapter
 import com.example.molysulfur.imageuser.adapter.creator.UserCreator
 import com.example.molysulfur.imageuser.adapter.item.BaseItem
+import com.example.molysulfur.imageuser.adapter.item.UserInfoItem
 import com.example.molysulfur.imageuser.data.UserInfos
 import com.example.molysulfur.imageuser.idlingresource.EspressoIdlingResource
 import com.example.molysulfur.imageuser.ui.fragment.ImageUserInfoFragment
+import com.example.molysulfur.imageuser.ui.fragment.VideoUserInfoFragment
 import com.example.molysulfur.imageuser.viewmodel.UserInfoViewModel
 import kotlinx.android.synthetic.main.activity_userinfo.*
 
@@ -51,53 +44,27 @@ class UserInfoActivity : BaseActivity(),
 
     private fun setViews(userItemList: List<BaseItem>) {
         EspressoIdlingResource.increment()
-        loadImageWithGlide(intent.getStringExtra("url"))
+        loadImageWithGlide(intent.getStringExtra("url"),(userItemList[0] as UserInfoItem).dataType)
         recycler_thumbnail.apply {
             layoutManager = LinearLayoutManager(this@UserInfoActivity, LinearLayoutManager.HORIZONTAL, false)
             adapter = UserListAdapter(userItemList, this@UserInfoActivity)
         }
     }
 
-    private fun loadImageWithGlide(url: String) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container,ImageUserInfoFragment.newInstance(url))
-            .commit()
-//        Glide.with(this@UserInfoActivity)
-//            .load(url)
-//            .transition(GenericTransitionOptions.with(R.anim.fade_in))
-//            .apply(
-//                RequestOptions()
-//                    .fitCenter()
-//                    .centerCrop()
-//                    .placeholder(R.drawable.placeholder_large)
-//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                    .format(DecodeFormat.PREFER_RGB_565)
-//            )
-//            .listener(object : RequestListener<Drawable?> {
-//                override fun onLoadFailed(
-//                    e: GlideException?,
-//                    model: Any?,
-//                    target: Target<Drawable?>?,
-//                    isFirstResource: Boolean
-//                ): Boolean {
-//                    e?.printStackTrace()
-//                    Toast.makeText(this@UserInfoActivity,"Load is Failed",Toast.LENGTH_SHORT).show()
-//                    EspressoIdlingResource.decrement()
-//                    return false
-//                }
-//
-//                override fun onResourceReady(
-//                    resource: Drawable?,
-//                    model: Any?,
-//                    target: Target<Drawable?>?,
-//                    dataSource: DataSource?,
-//                    isFirstResource: Boolean
-//                ): Boolean {
-//                    EspressoIdlingResource.decrement()
-//                    return false
-//                }
-//            })
-//            .into(currentImageUserInfo)
+    private fun loadImageWithGlide(url: String, dataType: String?="") {
+        Log.e("data type",dataType)
+        when(dataType){
+            "video" ->{
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.container,VideoUserInfoFragment.newInstance(url))
+                    .commit()
+            }
+            "image" ->{
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.container,ImageUserInfoFragment.newInstance(url))
+                    .commit()
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -107,9 +74,9 @@ class UserInfoActivity : BaseActivity(),
         Glide.get(this).clearMemory()
     }
 
-    override fun onCurrentImageChange(url: String, callback: UserListAdapter.SelectorListener?) {
+    override fun onCurrentImageChange(url: String, dataType: String,callback: UserListAdapter.SelectorListener?) {
         EspressoIdlingResource.increment()
-        loadImageWithGlide(url)
-        callback?.onCurrentImageChange(url, null)
+        loadImageWithGlide(url,dataType)
+        callback?.onCurrentImageChange(url,dataType,null)
     }
 }

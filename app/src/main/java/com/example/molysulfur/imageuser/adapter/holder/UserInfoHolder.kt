@@ -35,7 +35,11 @@ class UserInfoHolder(
                         .format(DecodeFormat.PREFER_RGB_565))
                 .into(imgThumbnail)
             imgThumbnail.setOnClickListener {
-                clickThumbnaiListener.onCurrentImageChange(userInfoItem.url?:"",callback)
+                clickThumbnaiListener.onCurrentImageChange(
+                    userInfoItem.url?:"",
+                    userInfoItem.dataType?:"",
+                    callback
+                )
             }
             if (userInfoItem.current){
                 imgThumbnail.borderColor = Color.BLUE
