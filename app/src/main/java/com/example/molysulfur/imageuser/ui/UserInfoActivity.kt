@@ -22,6 +22,7 @@ import com.example.molysulfur.imageuser.adapter.creator.UserCreator
 import com.example.molysulfur.imageuser.adapter.item.BaseItem
 import com.example.molysulfur.imageuser.data.UserInfos
 import com.example.molysulfur.imageuser.idlingresource.EspressoIdlingResource
+import com.example.molysulfur.imageuser.ui.fragment.ImageUserInfoFragment
 import com.example.molysulfur.imageuser.viewmodel.UserInfoViewModel
 import kotlinx.android.synthetic.main.activity_userinfo.*
 
@@ -58,42 +59,45 @@ class UserInfoActivity : BaseActivity(),
     }
 
     private fun loadImageWithGlide(url: String) {
-        Glide.with(this@UserInfoActivity)
-            .load(url)
-            .transition(GenericTransitionOptions.with(R.anim.fade_in))
-            .apply(
-                RequestOptions()
-                    .fitCenter()
-                    .centerCrop()
-                    .placeholder(R.drawable.placeholder_large)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .format(DecodeFormat.PREFER_RGB_565)
-            )
-            .listener(object : RequestListener<Drawable?> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Drawable?>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    e?.printStackTrace()
-                    Toast.makeText(this@UserInfoActivity,"Load is Failed",Toast.LENGTH_SHORT).show()
-                    EspressoIdlingResource.decrement()
-                    return false
-                }
-
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: Target<Drawable?>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    EspressoIdlingResource.decrement()
-                    return false
-                }
-            })
-            .into(currentImageUserInfo)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container,ImageUserInfoFragment.newInstance(url))
+            .commit()
+//        Glide.with(this@UserInfoActivity)
+//            .load(url)
+//            .transition(GenericTransitionOptions.with(R.anim.fade_in))
+//            .apply(
+//                RequestOptions()
+//                    .fitCenter()
+//                    .centerCrop()
+//                    .placeholder(R.drawable.placeholder_large)
+//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                    .format(DecodeFormat.PREFER_RGB_565)
+//            )
+//            .listener(object : RequestListener<Drawable?> {
+//                override fun onLoadFailed(
+//                    e: GlideException?,
+//                    model: Any?,
+//                    target: Target<Drawable?>?,
+//                    isFirstResource: Boolean
+//                ): Boolean {
+//                    e?.printStackTrace()
+//                    Toast.makeText(this@UserInfoActivity,"Load is Failed",Toast.LENGTH_SHORT).show()
+//                    EspressoIdlingResource.decrement()
+//                    return false
+//                }
+//
+//                override fun onResourceReady(
+//                    resource: Drawable?,
+//                    model: Any?,
+//                    target: Target<Drawable?>?,
+//                    dataSource: DataSource?,
+//                    isFirstResource: Boolean
+//                ): Boolean {
+//                    EspressoIdlingResource.decrement()
+//                    return false
+//                }
+//            })
+//            .into(currentImageUserInfo)
     }
 
     override fun onDestroy() {
