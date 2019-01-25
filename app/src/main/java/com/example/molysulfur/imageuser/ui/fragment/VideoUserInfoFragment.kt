@@ -5,17 +5,13 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.molysulfur.imageuser.R
 import com.example.molysulfur.imageuser.idlingresource.EspressoIdlingResource
 import com.example.molysulfur.imageuser.viewmodel.UserInfoViewModel
-import com.google.android.exoplayer2.DefaultLoadControl
-import com.google.android.exoplayer2.DefaultRenderersFactory
-import com.google.android.exoplayer2.ExoPlayerFactory
-import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.util.Util
@@ -24,13 +20,13 @@ import kotlinx.android.synthetic.main.fragment_userinfo_video.view.*
 
 class VideoUserInfoFragment : BaseFragment() {
 
-    private lateinit var userInfoViewModel : UserInfoViewModel
+    private lateinit var userInfoViewModel: UserInfoViewModel
 
     private var url = ""
     private var player: SimpleExoPlayer? = null
     private var playbackPosition: Long = 0
     private var currentWindow: Int = 0
-    private var playWhenReady : Boolean = false
+    private var playWhenReady: Boolean = false
 
     companion object {
         fun newInstance(url: String): VideoUserInfoFragment {
@@ -52,14 +48,13 @@ class VideoUserInfoFragment : BaseFragment() {
         url = arguments?.getString("url", "") ?: ""
         playWhenReady = true
         rootView.playerUserInfo.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL)
-        userInfoViewModel = ViewModelProviders.of(this,viewModelFactory).get(UserInfoViewModel::class.java)
+        userInfoViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserInfoViewModel::class.java)
     }
 
     override fun onStart() {
         super.onStart()
         if (Util.SDK_INT > 23) {
             initializePlayer(url)
-            EspressoIdlingResource.decrement()
         }
     }
 
@@ -84,7 +79,7 @@ class VideoUserInfoFragment : BaseFragment() {
         }
     }
 
-    private fun initializePlayer(url : String) {
+    private fun initializePlayer(url: String) {
         if (player == null) {
             player = ExoPlayerFactory.newSimpleInstance(
                 DefaultRenderersFactory(context),
@@ -96,14 +91,22 @@ class VideoUserInfoFragment : BaseFragment() {
             player?.seekTo(currentWindow, playbackPosition)
         }
         val mediaSource = userInfoViewModel.buildMediaSource(Uri.parse(url))
-        player?.prepare(mediaSource,true,false)
+        player?.prepare(mediaSource, true, false)
+        player?.addListener(object : Player.DefaultEventListener() {
+            override fun onLoadingChanged(isLoading: Boolean) {
+                super.onLoadingChanged(isLoading)
+                if (!isLoading) {
+                    EspressoIdlingResource.decrement()
+                }
+            }
+        })
     }
 
     private fun releasePlayer() {
         if (player != null) {
-            playbackPosition = player?.currentPosition?:0
-            currentWindow = player?.currentWindowIndex?:0
-            playWhenReady = player?.playWhenReady?:true
+            playbackPosition = player?.currentPosition ?: 0
+            currentWindow = player?.currentWindowIndex ?: 0
+            playWhenReady = player?.playWhenReady ?: true
             player?.release()
             player = null
         }

@@ -27,12 +27,12 @@ class UIApplicationTest {
     var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
 
     @Before
-    fun setup(){
+    fun setup() {
         IdlingRegistry.getInstance().register(mActivityTestRule.activity.getIdlingResourceInTest())
     }
 
     @After
-    fun unset(){
+    fun unset() {
         IdlingRegistry.getInstance().unregister(mActivityTestRule.activity.getIdlingResourceInTest())
     }
 
@@ -70,11 +70,11 @@ class UIApplicationTest {
             thumbnailItem
                 .check(matches(isDisplayed()))
                 .perform(
-                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    position,
-                    ViewActions.click()
+                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                        position,
+                        ViewActions.click()
+                    )
                 )
-            )
         }
         pressBack()
 
