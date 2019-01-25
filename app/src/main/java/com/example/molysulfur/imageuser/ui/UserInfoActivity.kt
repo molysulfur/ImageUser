@@ -44,7 +44,7 @@ class UserInfoActivity : BaseActivity(),
 
     private fun setViews(userItemList: List<BaseItem>) {
         EspressoIdlingResource.increment()
-        loadImageWithGlide(intent.getStringExtra("url"),(userItemList[0] as UserInfoItem).dataType)
+        loadImageWithGlide((userItemList[0] as UserInfoItem).url?:"",(userItemList[0] as UserInfoItem).dataType)
         recycler_thumbnail.apply {
             layoutManager = LinearLayoutManager(this@UserInfoActivity, LinearLayoutManager.HORIZONTAL, false)
             adapter = UserListAdapter(userItemList, this@UserInfoActivity)
