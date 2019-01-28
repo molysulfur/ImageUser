@@ -7,6 +7,8 @@ UserLists is a application that show user's image and show the thumbnails in a u
 * [circleimageview](https://github.com/hdodenhof/CircleImageView) for set image view like a circle
 * [Rxjava](https://github.com/ReactiveX/RxJava) is a library for composing asynchronous
 * [RxAndroid](https://github.com/ReactiveX/RxAndroid) for provides on the main thread or any
+* [ExoPlayer](https://github.com/google/ExoPlayer) for preview the video
+* [Dagger](https://github.com/google/dagger) for dependency injection
 
 # Screenshots
 ![userlist-1](https://user-images.githubusercontent.com/40534697/51223722-a153c300-1975-11e9-8774-7597d97a4cd5.PNG)
@@ -26,3 +28,5 @@ Import the project to folder into your IDE (tested on Android Studio), then run 
 * https://github.com/hdodenhof/CircleImageView
 * https://github.com/ReactiveX/RxJava
 * https://github.com/ReactiveX/RxAndroid
+* https://github.com/google/dagger
+* https://github.com/google/ExoPlayer
