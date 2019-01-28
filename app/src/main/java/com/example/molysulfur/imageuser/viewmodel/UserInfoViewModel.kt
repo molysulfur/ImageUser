@@ -4,7 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.net.Uri
 import com.example.molysulfur.imageuser.data.UserInfos
-import com.example.molysulfur.imageuser.idlingresource.EspressoIdlingResource
+import com.example.molysulfur.imageuser.idlingresource.SimpleCountingIdlingResource
 import com.example.molysulfur.imageuser.service.UserService
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.MediaSource
@@ -18,28 +18,28 @@ import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class UserInfoViewModel @Inject constructor() : ViewModel(){
+class UserInfoViewModel @Inject constructor(private var mIdlingResource: SimpleCountingIdlingResource) : ViewModel() {
 
     private val userAgent = "TestVideo"
     private val BANDWIDTH_METER = DefaultBandwidthMeter()
 
-    private var userInfoList : MutableLiveData<UserInfos>? = null
+    private var userInfoList: MutableLiveData<UserInfos>? = null
     private var userInfoObserver = object : DisposableObserver<UserInfos>() {
         override fun onComplete() {
         }
 
         override fun onNext(userInfos: UserInfos) {
             userInfoList?.value = userInfos
-            EspressoIdlingResource.decrement()
+            mIdlingResource.decrement()
         }
 
         override fun onError(e: Throwable) {
         }
     }
 
-    fun getUserInfo(name : String): MutableLiveData<UserInfos> {
-        if (userInfoList == null){
-            EspressoIdlingResource.increment()
+    fun getUserInfo(name: String): MutableLiveData<UserInfos> {
+        if (userInfoList == null) {
+            mIdlingResource.increment()
             userInfoList = MutableLiveData()
             UserService.getRetrofit().getUserInfo(name)
                 .subscribeOn(Schedulers.io())
@@ -65,7 +65,7 @@ class UserInfoViewModel @Inject constructor() : ViewModel(){
         }
     }
 
-    fun dispose(){
+    fun dispose() {
         userInfoObserver.dispose()
     }
 }

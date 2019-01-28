@@ -3,6 +3,7 @@ package com.example.molysulfur.imageuser.di
 import android.app.Application
 import com.example.molysulfur.imageuser.UserListApplication
 import com.example.molysulfur.imageuser.di.module.ActivityModule
+import com.example.molysulfur.imageuser.di.module.IdlingResourceModule
 import com.example.molysulfur.imageuser.di.module.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
@@ -14,7 +15,8 @@ import javax.inject.Singleton
     modules = [
         AndroidSupportInjectionModule::class,
         ActivityModule::class,
-        ViewModelModule::class
+        ViewModelModule::class,
+        IdlingResourceModule::class
     ]
 )
 interface AppComponent {

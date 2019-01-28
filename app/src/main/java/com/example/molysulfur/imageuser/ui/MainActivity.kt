@@ -10,7 +10,6 @@ import com.example.molysulfur.imageuser.adapter.UserListAdapter
 import com.example.molysulfur.imageuser.adapter.creator.UserCreator
 import com.example.molysulfur.imageuser.adapter.item.BaseItem
 import com.example.molysulfur.imageuser.data.Users
-import com.example.molysulfur.imageuser.idlingresource.EspressoIdlingResource
 import com.example.molysulfur.imageuser.viewmodel.UserListViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -18,14 +17,10 @@ class MainActivity : BaseActivity() {
 
     private lateinit var userListViewModel: UserListViewModel
 
-    private val mIdlingResource = EspressoIdlingResource
-
     private val userObserver = Observer<Users> {
-        EspressoIdlingResource.increment()
         val userItemList =
             UserCreator.toUsersBaseItem(it?.data)
         setViews(userItemList)
-        EspressoIdlingResource.decrement()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,16 +37,16 @@ class MainActivity : BaseActivity() {
     private fun setViews(userItemList: List<BaseItem>) {
         recycler_main.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = UserListAdapter(userItemList, null)
+            adapter = UserListAdapter(userItemList, null,mIdlingResource)
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        userListViewModel.dispose()
         Glide.get(this).clearMemory()
+        userListViewModel.dispose()
     }
 
-    fun getIdlingResourceInTest() = mIdlingResource.idlingResource
+    fun getIdlingResourceInTest() = mIdlingResource
 
 }

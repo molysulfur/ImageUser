@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.molysulfur.imageuser.R
-import com.example.molysulfur.imageuser.idlingresource.EspressoIdlingResource
 import com.example.molysulfur.imageuser.viewmodel.UserInfoViewModel
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
@@ -80,6 +79,7 @@ class VideoUserInfoFragment : BaseFragment() {
     }
 
     private fun initializePlayer(url: String) {
+        mIdlingResource.increment()
         if (player == null) {
             player = ExoPlayerFactory.newSimpleInstance(
                 DefaultRenderersFactory(context),
@@ -96,7 +96,7 @@ class VideoUserInfoFragment : BaseFragment() {
             override fun onLoadingChanged(isLoading: Boolean) {
                 super.onLoadingChanged(isLoading)
                 if (!isLoading) {
-                    EspressoIdlingResource.decrement()
+                    mIdlingResource.decrement()
                 }
             }
         })

@@ -11,11 +11,16 @@ import com.example.molysulfur.imageuser.adapter.holder.UserInfoHolder
 import com.example.molysulfur.imageuser.adapter.item.BaseItem
 import com.example.molysulfur.imageuser.adapter.item.UserInfoItem
 import com.example.molysulfur.imageuser.adapter.item.UserItem
+import com.example.molysulfur.imageuser.idlingresource.SimpleCountingIdlingResource
 
-class UserListAdapter(val listUser : List<BaseItem>?,val selectorListener: SelectorListener?) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class UserListAdapter(
+    private val listUser: List<BaseItem>?,
+    private val selectorListener: SelectorListener?,
+    private val mIdlingResource: SimpleCountingIdlingResource
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val selectorCallback = object : UserListAdapter.SelectorListener{
-        override fun onCurrentImageChange(url: String,dataType: String, callback: SelectorListener?) {
+    private val selectorCallback = object : UserListAdapter.SelectorListener {
+        override fun onCurrentImageChange(url: String, dataType: String, callback: SelectorListener?) {
             listUser?.forEach {
                 (it as UserInfoItem).current = it.url == url
             }
@@ -24,24 +29,26 @@ class UserListAdapter(val listUser : List<BaseItem>?,val selectorListener: Selec
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, type: Int): RecyclerView.ViewHolder {
-        return when(type) {
+        return when (type) {
             TYPE_USER_LIST -> {
-                val rootView = LayoutInflater.from(viewGroup.context).inflate(R.layout.layout_user_list, viewGroup, false)
-                UserHolder(rootView)
+                val rootView =
+                    LayoutInflater.from(viewGroup.context).inflate(R.layout.layout_user_list, viewGroup, false)
+                UserHolder(rootView, mIdlingResource)
             }
-            TYPE_USERINFO_LIST ->{
-                val rootView = LayoutInflater.from(viewGroup.context).inflate(R.layout.layout_thumbnail, viewGroup, false)
-                UserInfoHolder(rootView,selectorCallback)
+            TYPE_USERINFO_LIST -> {
+                val rootView =
+                    LayoutInflater.from(viewGroup.context).inflate(R.layout.layout_thumbnail, viewGroup, false)
+                UserInfoHolder(rootView, selectorCallback)
             }
             else -> {
-                super.createViewHolder(viewGroup,type)
+                super.createViewHolder(viewGroup, type)
             }
         }
     }
 
-    override fun getItemViewType(position: Int): Int = listUser?.get(position)?.type?:0
+    override fun getItemViewType(position: Int): Int = listUser?.get(position)?.type ?: 0
 
-    override fun getItemCount(): Int = listUser?.size?:0
+    override fun getItemCount(): Int = listUser?.size ?: 0
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         when {
@@ -60,7 +67,7 @@ class UserListAdapter(val listUser : List<BaseItem>?,val selectorListener: Selec
         }
     }
 
-    interface SelectorListener{
-        fun onCurrentImageChange(url : String,dataType : String,callback : SelectorListener?)
+    interface SelectorListener {
+        fun onCurrentImageChange(url: String, dataType: String, callback: SelectorListener?)
     }
 }

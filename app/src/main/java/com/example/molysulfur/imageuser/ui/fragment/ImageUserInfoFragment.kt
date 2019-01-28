@@ -2,7 +2,6 @@ package com.example.molysulfur.imageuser.ui.fragment
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,10 +16,9 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.example.molysulfur.imageuser.R
-import com.example.molysulfur.imageuser.idlingresource.EspressoIdlingResource
 import kotlinx.android.synthetic.main.fragment_userinfo_image.view.*
 
-class ImageUserInfoFragment : Fragment() {
+class ImageUserInfoFragment : BaseFragment() {
 
     private var url = ""
 
@@ -42,6 +40,7 @@ class ImageUserInfoFragment : Fragment() {
 
     private fun initInstances(rootView: View) {
         url = arguments?.getString("url", "") ?: ""
+        mIdlingResource.increment()
         Glide.with(this)
             .load(url)
             .transition(GenericTransitionOptions.with(R.anim.fade_in))
@@ -53,7 +52,7 @@ class ImageUserInfoFragment : Fragment() {
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .format(DecodeFormat.PREFER_RGB_565)
             )
-            .listener(object: RequestListener<Drawable?> {
+            .listener(object : RequestListener<Drawable?> {
                 override fun onLoadFailed(
                     e: GlideException?,
                     model: Any?,
@@ -61,8 +60,8 @@ class ImageUserInfoFragment : Fragment() {
                     isFirstResource: Boolean
                 ): Boolean {
                     e?.printStackTrace()
-                    Toast.makeText(activity,"Load is Failed",Toast.LENGTH_SHORT).show()
-                    EspressoIdlingResource.decrement()
+                    Toast.makeText(activity, "Load is Failed", Toast.LENGTH_SHORT).show()
+                    mIdlingResource.decrement()
                     return false
                 }
 
@@ -73,7 +72,7 @@ class ImageUserInfoFragment : Fragment() {
                     dataSource: DataSource?,
                     isFirstResource: Boolean
                 ): Boolean {
-                    EspressoIdlingResource.decrement()
+                    mIdlingResource.decrement()
                     return false
                 }
             })

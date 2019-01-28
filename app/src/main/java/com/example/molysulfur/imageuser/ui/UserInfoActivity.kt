@@ -13,7 +13,6 @@ import com.example.molysulfur.imageuser.adapter.creator.UserCreator
 import com.example.molysulfur.imageuser.adapter.item.BaseItem
 import com.example.molysulfur.imageuser.adapter.item.UserInfoItem
 import com.example.molysulfur.imageuser.data.UserInfos
-import com.example.molysulfur.imageuser.idlingresource.EspressoIdlingResource
 import com.example.molysulfur.imageuser.ui.fragment.ImageUserInfoFragment
 import com.example.molysulfur.imageuser.ui.fragment.VideoUserInfoFragment
 import com.example.molysulfur.imageuser.viewmodel.UserInfoViewModel
@@ -24,8 +23,7 @@ class UserInfoActivity : BaseActivity(),
 
     private lateinit var userInfoViewModel: UserInfoViewModel
     private val userObserver = Observer<UserInfos> {
-        val userItemList =
-            UserCreator.toUserInfoBaseItem(it?.data)
+        val userItemList = UserCreator.toUserInfoBaseItem(it?.data)
         setViews(userItemList)
     }
 
@@ -39,29 +37,28 @@ class UserInfoActivity : BaseActivity(),
         userInfoViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserInfoViewModel::class.java)
         Glide.get(this).setMemoryCategory(MemoryCategory.LOW)
         userInfoViewModel.getUserInfo(intent.getStringExtra("name"))
-            .observe(this,userObserver)
+            .observe(this, userObserver)
     }
 
     private fun setViews(userItemList: List<BaseItem>) {
-        EspressoIdlingResource.increment()
-        loadImageWithGlide((userItemList[0] as UserInfoItem).url?:"",(userItemList[0] as UserInfoItem).dataType)
+        loadImageWithGlide((userItemList[0] as UserInfoItem).url ?: "", (userItemList[0] as UserInfoItem).dataType)
         recycler_thumbnail.apply {
             layoutManager = LinearLayoutManager(this@UserInfoActivity, LinearLayoutManager.HORIZONTAL, false)
-            adapter = UserListAdapter(userItemList, this@UserInfoActivity)
+            adapter = UserListAdapter(userItemList, this@UserInfoActivity, mIdlingResource)
         }
     }
 
-    private fun loadImageWithGlide(url: String, dataType: String?="") {
-        Log.e("data type",dataType)
-        when(dataType){
-            "video" ->{
+    private fun loadImageWithGlide(url: String, dataType: String? = "") {
+        Log.e("data type", dataType)
+        when (dataType) {
+            "video" -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.container,VideoUserInfoFragment.newInstance(url))
+                    .replace(R.id.container, VideoUserInfoFragment.newInstance(url))
                     .commit()
             }
-            "image" ->{
+            "image" -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.container,ImageUserInfoFragment.newInstance(url))
+                    .replace(R.id.container, ImageUserInfoFragment.newInstance(url))
                     .commit()
             }
         }
@@ -74,9 +71,8 @@ class UserInfoActivity : BaseActivity(),
         Glide.get(this).clearMemory()
     }
 
-    override fun onCurrentImageChange(url: String, dataType: String,callback: UserListAdapter.SelectorListener?) {
-        EspressoIdlingResource.increment()
-        loadImageWithGlide(url,dataType)
-        callback?.onCurrentImageChange(url,dataType,null)
+    override fun onCurrentImageChange(url: String, dataType: String, callback: UserListAdapter.SelectorListener?) {
+        loadImageWithGlide(url, dataType)
+        callback?.onCurrentImageChange(url, dataType, null)
     }
 }
