@@ -3,6 +3,8 @@ package com.example.molysulfur.imageuser.ui
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.annotation.NonNull
+import android.support.annotation.VisibleForTesting
 import android.support.v7.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.molysulfur.imageuser.R
@@ -47,6 +49,8 @@ class MainActivity : BaseActivity() {
         userListViewModel.dispose()
     }
 
+    @VisibleForTesting
+    @NonNull
     fun getIdlingResourceInTest() = mIdlingResource
 
 }

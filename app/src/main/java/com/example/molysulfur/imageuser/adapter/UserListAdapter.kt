@@ -33,7 +33,7 @@ class UserListAdapter(
             TYPE_USER_LIST -> {
                 val rootView =
                     LayoutInflater.from(viewGroup.context).inflate(R.layout.layout_user_list, viewGroup, false)
-                UserHolder(rootView, mIdlingResource)
+                UserHolder(rootView)
             }
             TYPE_USERINFO_LIST -> {
                 val rootView =
@@ -54,7 +54,7 @@ class UserListAdapter(
         when {
             listUser?.get(position)?.type == TYPE_USER_LIST -> {
                 viewHolder as UserHolder
-                viewHolder.onBind(listUser[position] as UserItem)
+                viewHolder.onBind(listUser[position] as UserItem,mIdlingResource)
             }
             listUser?.get(position)?.type == TYPE_USERINFO_LIST -> {
                 if (selectorListener != null) {

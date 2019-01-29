@@ -22,10 +22,10 @@ import com.example.molysulfur.imageuser.ui.UserInfoActivity
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.layout_user_list.*
 
-class UserHolder(override val containerView: View, @Nullable private val mIdlingResource: SimpleCountingIdlingResource) :
+class UserHolder(override val containerView: View) :
     RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-    fun onBind(userItem: UserItem?) {
+    fun onBind(userItem: UserItem?, @Nullable mIdlingResource: SimpleCountingIdlingResource) {
         if (userItem != null) {
             mIdlingResource.increment()
             Glide.with(containerView.context)
